@@ -28,7 +28,7 @@ namespace Game.Combat
         [SerializeField] private float MinSize;
 
         [Header("O tamanho atual do círculo externo")]
-        [SerializeField] private float ActualSize;
+        [SerializeField] protected float ActualSize;
 
         private Animator _animator;
 
@@ -72,7 +72,7 @@ namespace Game.Combat
 
         public virtual void OnCircleClicked()
         {
-            CheckSize();   
+            CombatEvents.onCircleClicked.Invoke(true);
             //Debug.Log($"{this.gameObject.name} desativado");
 
             this.gameObject.SetActive(false);

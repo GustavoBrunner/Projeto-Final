@@ -38,6 +38,7 @@ namespace Game.Combat
         {
             if(result)
             {
+                Debug.Log("Ataque certo");
                 /* 
                  * se o inimigo tomar o dano, o dano vai na postura. Se a diferença entre o dano e a postura
                  * ser menor que 0, essa diferença vai ser guardada em outra variável e será mandada para a vida
@@ -69,6 +70,7 @@ namespace Game.Combat
             }
             else
             {
+                Debug.Log("Ataque errado");
                 if (PlayerData.Composture - EnemyData.Damage >= 0)
                 {
                     //compostura continua absorvendo o dano
