@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7701730609985825488}
   - component: {fileID: 7701730609985825491}
   - component: {fileID: 7701730609985825500}
+  - component: {fileID: 2460174386603038198}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -49,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f8b92c48e45f24c8f6fc08e058be4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerDataController: {fileID: 0}
 --- !u!114 &7701730609985825488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,15 +63,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05fa2c630d7fc5e4caf0ae97e8e09fb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SmoothTransition: 1
-  TransitionSpeed: 15
-  TransitionRotationSpeed: 100
-  RunSpeed: 0
   TargetGridPos: {x: 0, y: 0, z: 0}
   PrevTargetGridPos: {x: 0, y: 0, z: 0}
   TargetRot: {x: 0, y: 0, z: 0}
   PlayerController: {fileID: 0}
   CollisionController: {fileID: 0}
+  PlayerDataController: {fileID: 0}
 --- !u!114 &7701730609985825491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,13 +81,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 364292bde86720c4eb99d9fdf0b8456f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Foward: 119
-  Backward: 115
-  Right: 97
-  Left: 100
-  RotateRight: 113
-  RotateLeft: 101
+  PlayerDataController: {fileID: 0}
   MovementController: {fileID: 0}
+  PlayerController: {fileID: 0}
 --- !u!114 &7701730609985825500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,7 +100,35 @@ MonoBehaviour:
   BackCollision: 0
   LeftCollision: 0
   RightCollision: 0
-  RayDistance: 3
+  PlayerDataController: {fileID: 0}
+--- !u!114 &2460174386603038198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7701730609985825495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f39488a2cca89c949ac30d7102f07e6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data:
+    Hp: 100
+    Damage: 20
+    RunSpeed: 2
+    TransitionSpeed: 15
+    SmoothTransition: 1
+    TransitionRotationSpeed: 150
+    AttackSpeed: 0.7
+    CanAttack: 1
+    Foward: 119
+    Backward: 115
+    Right: 100
+    Left: 97
+    RotateRight: 101
+    RotateLeft: 113
+    RayDistance: 3
 --- !u!1 &7701730610024101912
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,6 +171,7 @@ GameObject:
   - component: {fileID: 7701730611265273232}
   - component: {fileID: 7701730611265273239}
   - component: {fileID: 7701730611265273238}
+  - component: {fileID: 2377553278074559937}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -221,3 +245,18 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7701730611265273237}
   m_Enabled: 1
+--- !u!114 &2377553278074559937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7701730611265273237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5e4f648ed9063e49bd32ce99d18f5b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DataController: {fileID: 0}
+  screenMousePos: {x: 0, y: 0, z: 0}
+  CurrentCam: {fileID: 0}

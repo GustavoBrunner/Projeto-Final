@@ -7,28 +7,27 @@ namespace Game.Player
     [RequireComponent(typeof(MovementController))]
     public class PlayerInput : MonoBehaviour
     {
-        [SerializeField] private KeyCode Foward;
-        [SerializeField] private KeyCode Backward;
-        [SerializeField] private KeyCode Right;
-        [SerializeField] private KeyCode Left;
-        [SerializeField] private KeyCode RotateRight;
-        [SerializeField] private KeyCode RotateLeft;
+        [SerializeField] private PlayerDataController PlayerDataController;
 
         [SerializeField] MovementController MovementController;
+        [SerializeField] PlayerController PlayerController;
 
         private void Awake()
         {
+            PlayerDataController = GetComponent<PlayerDataController>();
             MovementController = GetComponent<MovementController>();
+            PlayerController = GetComponent<PlayerController>();
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(Foward)) MovementController.MoveFoward();
-            if (Input.GetKeyDown(Backward)) MovementController.MoveBack();
-            if (Input.GetKeyUp(Right)) MovementController.MoveRight();
-            if (Input.GetKeyUp(Left)) MovementController.MoveLeft();
-            if (Input.GetKeyUp(RotateLeft)) MovementController.RotateLeft();
-            if (Input.GetKeyUp(RotateRight)) MovementController.RotateRight();
+            if (Input.GetKeyDown(PlayerDataController.Data.Foward)) MovementController.MoveFoward();
+            if (Input.GetKeyDown(PlayerDataController.Data.Backward)) MovementController.MoveBack();
+            if (Input.GetKeyUp(PlayerDataController.Data.Right)) MovementController.MoveRight();
+            if (Input.GetKeyUp(PlayerDataController.Data.Left)) MovementController.MoveLeft();
+            if (Input.GetKeyUp(PlayerDataController.Data.RotateLeft)) MovementController.RotateLeft();
+            if (Input.GetKeyUp(PlayerDataController.Data.RotateRight)) MovementController.RotateRight();
+            if (Input.GetMouseButtonDown(0)) PlayerController.Attack();
         }
     }
 

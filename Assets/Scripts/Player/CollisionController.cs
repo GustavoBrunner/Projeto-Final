@@ -9,22 +9,30 @@ namespace Game.Player
         [SerializeField] private RaycastHit RayFront, RayBack, RayRight, RayLeft;
         public bool FrontCollision, BackCollision, LeftCollision, RightCollision;
 
-        [SerializeField] private float RayDistance;
+        [SerializeField] private PlayerDataController PlayerDataController;
+        private void Awake()
+        {
+            this.PlayerDataController = GetComponent<PlayerDataController>();
+        }
 
         private void FixedUpdate()
         {
-            FrontCollision = Physics.Raycast(this.transform.position, transform.forward, out RayFront, RayDistance);
+            FrontCollision = Physics.Raycast(this.transform.position, transform.forward, out RayFront, PlayerDataController.Data.RayDistance);
 
-            BackCollision = Physics.Raycast(this.transform.position, -transform.forward, out RayBack, RayDistance);
+            BackCollision = Physics.Raycast(this.transform.position, -transform.forward, out RayBack, PlayerDataController.Data.RayDistance);
 
-            LeftCollision = Physics.Raycast(this.transform.position, -transform.right, out RayLeft, RayDistance);
+            LeftCollision = Physics.Raycast(this.transform.position, -transform.right, out RayLeft, PlayerDataController.Data.RayDistance);
 
-            RightCollision = Physics.Raycast(this.transform.position, transform.right, out RayRight, RayDistance);
+            RightCollision = Physics.Raycast(this.transform.position, transform.right, out RayRight, PlayerDataController.Data.RayDistance);
                     
-            Debug.DrawRay(this.transform.position, transform.forward * RayDistance, Color.green, RayDistance);
-            Debug.DrawRay(this.transform.position, -transform.forward * RayDistance, Color.green, RayDistance);
-            Debug.DrawRay(this.transform.position, transform.right * RayDistance, Color.green, RayDistance);
-            Debug.DrawRay(this.transform.position, -transform.right * RayDistance, Color.green, RayDistance);
+            Debug.DrawRay(this.transform.position, transform.forward * PlayerDataController.Data.RayDistance,
+                Color.green, PlayerDataController.Data.RayDistance);
+            Debug.DrawRay(this.transform.position, -transform.forward * PlayerDataController.Data.RayDistance, 
+                Color.green, PlayerDataController.Data.RayDistance);
+            Debug.DrawRay(this.transform.position, transform.right * PlayerDataController.Data.RayDistance, 
+                Color.green, PlayerDataController.Data.RayDistance);
+            Debug.DrawRay(this.transform.position, -transform.right * PlayerDataController.Data.RayDistance, 
+                Color.green, PlayerDataController.Data.RayDistance);
 
 
         }

@@ -1,4 +1,5 @@
 
+using Game.TurnSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,12 +10,7 @@ namespace Game.Player
 
     public class MovementController : MonoBehaviour
     {
-        [SerializeField] private bool SmoothTransition;
-        [Range(0f, 50f)]
-        [SerializeField] private float TransitionSpeed;
-        [Range(0f, 200f)]
-        [SerializeField] private float TransitionRotationSpeed;
-        [SerializeField] private float RunSpeed;
+        
 
         [SerializeField] private Vector3 TargetGridPos;
         [SerializeField] private Vector3 PrevTargetGridPos;
@@ -23,6 +19,7 @@ namespace Game.Player
         private bool _canRun;
         [SerializeField] private PlayerController PlayerController;
         [SerializeField] private CollisionController CollisionController;
+        [SerializeField] private PlayerDataController PlayerDataController;
 
         public bool IsAtRest {
             get 
@@ -46,11 +43,11 @@ namespace Game.Player
             {
                 if (value)
                 {
-                    RunSpeed = 4f;
+                    PlayerDataController.Data.RunSpeed = 4f;
                 }
                 else
                 {
-                    RunSpeed = 2f;
+                    PlayerDataController.Data.RunSpeed = 2f;
                 }
                 _canRun = value;
             } 
@@ -58,6 +55,7 @@ namespace Game.Player
         //unity methods
         private void Start()
         {
+            PlayerDataController = GetComponent<PlayerDataController>();
             this.CollisionController = GetComponent<CollisionController>();
             TargetGridPos = Vector3Int.RoundToInt(transform.position);
             CanRun = false;
@@ -70,37 +68,31 @@ namespace Game.Player
         //methods
         private void Move()
         {
-            if (true)
+            PrevTargetGridPos = TargetGridPos;
+
+            Vector3 targetPosition = TargetGridPos;
+
+            if (TargetRot.y > 270 && TargetRot.y < 361) TargetRot.y = 0f;
+            if (TargetRot.y < 0f) TargetRot.y = 270f;
+
+            if (!PlayerDataController.Data.SmoothTransition)
             {
-                PrevTargetGridPos = TargetGridPos;
-
-                Vector3 targetPosition = TargetGridPos;
-
-                if (TargetRot.y > 270 && TargetRot.y < 361) TargetRot.y = 0f;
-                if (TargetRot.y < 0f) TargetRot.y = 270f;
-
-                if (!SmoothTransition)
-                {
-                    transform.position = targetPosition;
-                    transform.rotation = Quaternion.Euler(TargetRot);
-                }
-                else
-                {
-                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * TransitionSpeed);
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(TargetRot), Time.deltaTime * TransitionRotationSpeed);
-                }
-
+                transform.position = targetPosition;
+                transform.rotation = Quaternion.Euler(TargetRot);
             }
             else
             {
-                TargetGridPos = PrevTargetGridPos;
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * PlayerDataController.Data.TransitionSpeed);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(TargetRot), Time.deltaTime * PlayerDataController.Data.TransitionRotationSpeed);
             }
         }
+
         public void RotateRight()
         {
             if(IsAtRest)
             {
                 TargetRot += Vector3.up * 90f;
+                TurnEvents.PlayerActed.Invoke();
             }
         }
         public void RotateLeft()
@@ -108,12 +100,14 @@ namespace Game.Player
             if(IsAtRest)
             {
                 TargetRot -= Vector3.up * 90f;
+                TurnEvents.PlayerActed.Invoke();
             }
         }
         public void MoveFoward() 
         {
             if (IsAtRest && !CollisionController.FrontCollision) {
-                TargetGridPos += transform.forward * RunSpeed;
+                TargetGridPos += transform.forward * PlayerDataController.Data.RunSpeed;
+                TurnEvents.PlayerActed.Invoke();
             }
         }
 
@@ -121,7 +115,8 @@ namespace Game.Player
         {
             if (IsAtRest && !CollisionController.BackCollision)
             {
-                TargetGridPos -= transform.forward * RunSpeed;
+                TargetGridPos -= transform.forward * PlayerDataController.Data.RunSpeed;
+                TurnEvents.PlayerActed.Invoke();
             }
         }
 
@@ -129,14 +124,16 @@ namespace Game.Player
         {
             if (IsAtRest && !CollisionController.LeftCollision)
             {
-                TargetGridPos += transform.right * RunSpeed;
+                TargetGridPos += transform.right * PlayerDataController.Data.RunSpeed;
+                TurnEvents.PlayerActed.Invoke();
             }
         }
         public void MoveRight()
         {
             if (IsAtRest && !CollisionController.RightCollision)
             {
-                TargetGridPos -= transform.right * RunSpeed;
+                TargetGridPos -= transform.right * PlayerDataController.Data.RunSpeed;
+                TurnEvents.PlayerActed.Invoke();
             }
         }
 
